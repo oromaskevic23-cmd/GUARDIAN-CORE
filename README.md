@@ -43,3 +43,7 @@ Inputs must be authenticated by a trusted caller; no signed policy distribution,
 Public source visibility is not a license grant. See [LICENSE](LICENSE).
 
 **Architecture Before Implementation. Evidence Before Trust.**
+
+## Security hardening v0.2
+
+[Implementation](src/veto.mjs) · [Tests](test/veto.test.mjs) · [Evidence and limitations](docs/HARDENING_V0_2.md).

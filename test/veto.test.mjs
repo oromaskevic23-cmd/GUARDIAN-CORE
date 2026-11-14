@@ -1,0 +1,14 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {generateKeyPairSync,sign} from 'node:crypto';
+import {vetoBytes,verifyVetoState} from '../src/veto.mjs';
+const k=generateKeyPairSync('ed25519');
+const p={v:1,org:'demo',epoch:3,iat:100,exp:130,global:true,actions:['publish']};
+const env={payload:p,signature:sign(null,vetoBytes(p),k.privateKey).toString('hex')};
+const check=(e=env,epoch=3,now=120,org='demo',key=k.publicKey)=>verifyVetoState(e,key,org,epoch,now);
+test('verified immutable veto',()=>{const state=check();assert.equal(state.global,true);assert.throws(()=>state.actions.push('x'));});
+test('unsigned release rejected',()=>assert.equal(check({...env,payload:{...p,global:false}}),null));
+test('epoch rollback',()=>assert.equal(check(env,4),null));
+test('expiry',()=>assert.equal(check(env,3,130),null));
+test('cross tenant',()=>assert.equal(check(env,3,120,'other'),null));
+test('unknown key',()=>assert.equal(check(env,3,120,'demo',generateKeyPairSync('ed25519').publicKey),null));
