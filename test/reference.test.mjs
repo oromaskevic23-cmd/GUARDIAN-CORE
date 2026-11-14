@@ -1,0 +1,13 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {evaluate} from '../src/index.mjs';
+const req={identityVerified:true,org:'demo',action:'publish'};
+const policy={org:'demo',rules:[{action:'publish',decision:'REQUIRE_APPROVAL'}]};
+const veto={org:'demo',epoch:1,observedAt:100,global:false,actions:[]};
+test('approval required',()=>assert.equal(evaluate(req,policy,veto,100).decision,'REQUIRE_APPROVAL'));
+test('veto wins',()=>assert.equal(evaluate(req,policy,{...veto,actions:['publish']},100).reason,'ARCHITECT_VETO'));
+test('global veto',()=>assert.equal(evaluate(req,policy,{...veto,global:true},100).decision,'DENY'));
+test('stale state',()=>assert.equal(evaluate(req,policy,veto,131).decision,'DENY'));
+test('cross tenant',()=>assert.equal(evaluate({...req,org:'other'},policy,veto,100).decision,'DENY'));
+test('ambiguous rules',()=>assert.equal(evaluate(req,{...policy,rules:[...policy.rules,...policy.rules]},veto,100).decision,'DENY'));
+test('no identity',()=>assert.equal(evaluate({...req,identityVerified:false},policy,veto,100).decision,'DENY'));
