@@ -47,3 +47,9 @@ Public source visibility is not a license grant. See [LICENSE](LICENSE).
 ## Security hardening v0.2
 
 [Implementation](src/veto.mjs) · [Tests](test/veto.test.mjs) · [Evidence and limitations](docs/HARDENING_V0_2.md).
+
+## Security composition v0.3
+
+Signed organization-scoped policy evaluation and signed veto verification. Deny on malformed, expired, tampered or rolled-back state. The identityVerified input must be established by the trusted host, not accepted from an agent.
+
+[Implementation](src/signed-policy.mjs) · [Tests](test/signed-policy.test.mjs) · [Scope and evidence](docs/COMPOSITION_V0_3.md).

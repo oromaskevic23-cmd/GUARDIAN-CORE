@@ -1,0 +1,17 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {generateKeyPairSync,sign} from 'node:crypto';
+import {policyBytes,evaluateSigned} from '../src/signed-policy.mjs';
+import {vetoBytes} from '../src/veto.mjs';
+const p=generateKeyPairSync('ed25519'),v=generateKeyPairSync('ed25519');
+const signed=(payload,bytes,key)=>({payload,signature:sign(null,bytes(payload),key.privateKey).toString('hex')});
+const policy={v:1,org:'demo',epoch:5,iat:100,exp:200,rules:[{action:'read',decision:'REQUIRE_APPROVAL'}]};
+const envelope=signed(policy,policyBytes,p);
+const veto=global=>signed({v:1,org:'demo',epoch:2,iat:100,exp:130,global,actions:[]},vetoBytes,v);
+const trust={org:'demo',policyKey:p.publicKey,vetoKey:v.publicKey,minimumPolicyEpoch:5,minimumVetoEpoch:2};
+const req={org:'demo',action:'read',identityVerified:true};
+test('signed policy and veto state',()=>assert.equal(evaluateSigned(req,envelope,veto(false),trust,120).decision,'REQUIRE_APPROVAL'));
+test('active veto wins',()=>assert.equal(evaluateSigned(req,envelope,veto(true),trust,120).reason,'ARCHITECT_VETO'));
+test('policy tampering denied',()=>assert.equal(evaluateSigned(req,{...envelope,payload:{...policy,rules:[{action:'read',decision:'ALLOW'}]}},veto(false),trust,120).decision,'DENY'));
+test('rollback and expired veto denied',()=>{assert.equal(evaluateSigned(req,envelope,veto(false),{...trust,minimumPolicyEpoch:6},120).decision,'DENY');assert.equal(evaluateSigned(req,envelope,veto(false),trust,130).decision,'DENY');});
+test('duplicate rules rejected',()=>assert.throws(()=>policyBytes({...policy,rules:[...policy.rules,...policy.rules]})));
