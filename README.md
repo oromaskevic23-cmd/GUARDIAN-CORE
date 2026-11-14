@@ -8,7 +8,7 @@
 
 A pure deterministic decision function with explicit deny precedence, scoped veto snapshots, organization isolation and approval requirements.
 
-**Status: REFERENCE IMPLEMENTATION / VERIFICATION PENDING.** No production deployment, certification or real Owner enrollment is claimed.
+**Status: LOCAL TESTED REFERENCE / INDEPENDENT QA PENDING.** No production deployment, certification or real Owner enrollment is claimed.
 
 ## Quick start
 
@@ -23,7 +23,7 @@ API: `evaluate(request, trustedPolicy, trustedVeto, now)`.
 - [Architecture and release gates](ARCHITECTURE.md)
 - [Threat model](THREAT_MODEL.md)
 - [Security policy](SECURITY.md)
-- [Source](src/index.mjs) · [Tests](test/reference.test.mjs)
+- [Source](src/index.mjs) · [Tests](test/reference.test.mjs) · [Local test evidence](evidence/LOCAL_TEST_EVIDENCE.md)
 - [Authorship](AUTHORS.md) · [Roadmap](ROADMAP.md)
 
 ## Limitations
