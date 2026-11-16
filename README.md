@@ -12,13 +12,13 @@ A pure deterministic decision function with explicit deny precedence, scoped vet
 
 ## Quick start
 
-Node.js 22+; no external dependencies or paid services.
+Node.js 22.13+; no external dependencies or paid services. The local run in this iteration used Node.js 24.22.1.
 
 ```sh
 npm test
 ```
 
-API: `evaluate(request, trustedPolicy, trustedVeto, now)`.
+Use `PolicyFloor.evaluate(...)` for signed local policy and veto checks. The lower-level `evaluate(...)` assumes its inputs are already authenticated. In both APIs the host is responsible for identity verification.
 
 - [Architecture and release gates](ARCHITECTURE.md)
 - [Threat model](THREAT_MODEL.md)
@@ -43,6 +43,12 @@ Inputs must be authenticated by a trusted caller; no signed policy distribution,
 Public source visibility is not a license grant. See [LICENSE](LICENSE).
 
 **Architecture Before Implementation. Evidence Before Trust.**
+
+## Local policy and veto rollback protection
+
+[PolicyFloor](src/policy-floor.mjs) verifies signed policy and veto snapshots, stores their monotonic floors together, and rejects rollback or changed content at the same epoch. A trusted host must verify identity before supplying `identityVerified`; this module does not authenticate that claim. State checks are not atomic with external execution. Key rotation and distributed state are not implemented.
+
+SQLite files are created with owner-only POSIX permissions; existing files with broader permissions and symlinks are rejected on POSIX. Use a trusted directory and protect the database against replacement. Windows ACL enforcement is not implemented or tested.
 
 ## Security hardening v0.2
 

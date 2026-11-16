@@ -1,0 +1,178 @@
+TAP version 13
+# Subtest: signed policy and veto decisions persist their floor
+ok 1 - signed policy and veto decisions persist their floor
+  ---
+  duration_ms: 57.628564
+  type: 'test'
+  ...
+# Subtest: same epoch cannot silently relax signed veto or change policy
+ok 2 - same epoch cannot silently relax signed veto or change policy
+  ---
+  duration_ms: 10.856914
+  type: 'test'
+  ...
+# Subtest: tampered, expired or substituted authorities do not advance floor
+ok 3 - tampered, expired or substituted authorities do not advance floor
+  ---
+  duration_ms: 14.577562
+  type: 'test'
+  ...
+# Subtest: policy and veto floors advance atomically
+ok 4 - policy and veto floors advance atomically
+  ---
+  duration_ms: 3.453296
+  type: 'test'
+  ...
+# Subtest: unverified identity is denied and key rotation is not automatic
+ok 5 - unverified identity is denied and key rotation is not automatic
+  ---
+  duration_ms: 3.800258
+  type: 'test'
+  ...
+# Subtest: memory storage is rejected
+ok 6 - memory storage is rejected
+  ---
+  duration_ms: 0.270878
+  type: 'test'
+  ...
+# Subtest: failed floor write denies and rolls back both state changes
+ok 7 - failed floor write denies and rolls back both state changes
+  ---
+  duration_ms: 3.591784
+  type: 'test'
+  ...
+# Subtest: approval required
+ok 8 - approval required
+  ---
+  duration_ms: 1.540338
+  type: 'test'
+  ...
+# Subtest: veto wins
+ok 9 - veto wins
+  ---
+  duration_ms: 0.276416
+  type: 'test'
+  ...
+# Subtest: global veto
+ok 10 - global veto
+  ---
+  duration_ms: 0.272811
+  type: 'test'
+  ...
+# Subtest: stale state
+ok 11 - stale state
+  ---
+  duration_ms: 0.228213
+  type: 'test'
+  ...
+# Subtest: cross tenant
+ok 12 - cross tenant
+  ---
+  duration_ms: 5.518082
+  type: 'test'
+  ...
+# Subtest: ambiguous rules
+ok 13 - ambiguous rules
+  ---
+  duration_ms: 0.415125
+  type: 'test'
+  ...
+# Subtest: no identity
+ok 14 - no identity
+  ---
+  duration_ms: 2.345359
+  type: 'test'
+  ...
+# Subtest: new SQLite database is private on POSIX
+ok 15 - new SQLite database is private on POSIX
+  ---
+  duration_ms: 9.264138
+  type: 'test'
+  ...
+# Subtest: symlink database is rejected
+ok 16 - symlink database is rejected
+  ---
+  duration_ms: 3.971135
+  type: 'test'
+  ...
+# Subtest: existing database with broad POSIX permissions is rejected
+ok 17 - existing database with broad POSIX permissions is rejected
+  ---
+  duration_ms: 0.521134
+  type: 'test'
+  ...
+# Subtest: signed policy and veto state
+ok 18 - signed policy and veto state
+  ---
+  duration_ms: 10.351414
+  type: 'test'
+  ...
+# Subtest: active veto wins
+ok 19 - active veto wins
+  ---
+  duration_ms: 0.739262
+  type: 'test'
+  ...
+# Subtest: policy tampering denied
+ok 20 - policy tampering denied
+  ---
+  duration_ms: 0.507463
+  type: 'test'
+  ...
+# Subtest: rollback and expired veto denied
+ok 21 - rollback and expired veto denied
+  ---
+  duration_ms: 7.05546
+  type: 'test'
+  ...
+# Subtest: duplicate rules rejected
+ok 22 - duplicate rules rejected
+  ---
+  duration_ms: 2.427001
+  type: 'test'
+  ...
+# Subtest: verified immutable veto
+ok 23 - verified immutable veto
+  ---
+  duration_ms: 8.04205
+  type: 'test'
+  ...
+# Subtest: unsigned release rejected
+ok 24 - unsigned release rejected
+  ---
+  duration_ms: 11.07361
+  type: 'test'
+  ...
+# Subtest: epoch rollback
+ok 25 - epoch rollback
+  ---
+  duration_ms: 0.676067
+  type: 'test'
+  ...
+# Subtest: expiry
+ok 26 - expiry
+  ---
+  duration_ms: 0.469817
+  type: 'test'
+  ...
+# Subtest: cross tenant
+ok 27 - cross tenant
+  ---
+  duration_ms: 0.392761
+  type: 'test'
+  ...
+# Subtest: unknown key
+ok 28 - unknown key
+  ---
+  duration_ms: 1.106715
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 569.977808
